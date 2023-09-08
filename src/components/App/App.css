@@ -1,23 +1,32 @@
-.App {
+.body {
+  margin: 0;
+  padding: 0;
+  background: whitesmoke;
+}
+
+.container {
+  margin: 5px 5px 5px 5px;
+}
+
+.header {
+  background: rgba(120,120,120, 0.4);
+  min-height: 75px;
   text-align: center;
+  padding-top: 12px;
+  border-bottom: 2px solid darkgray;
+  color:rgba(100,100,100, 0.4);
+  text-shadow: 1px -1px 1px rgba(104, 104, 104, 0.7);
 }
 
-.App-header {
-  background-color: #033076;
-  min-height: 70px;
-  padding: 20px;
-  color: white;
-  margin-bottom: 20px;
+.stepper {
+  margin-left: 15px;
+  margin-right: 25px;
+  margin-top: 15px;
 }
 
-.App-title {
-  font-size: 2em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-h4 {
-  font-style: italic;
+.content {
+  margin-top: 105px;
+  margin-left: 25px;
+  width: 100%;
+  text-align: center;
 }
