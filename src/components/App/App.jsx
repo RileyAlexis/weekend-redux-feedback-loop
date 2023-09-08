@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
 //Material UI
@@ -16,23 +17,34 @@ import Feeling from '../Feeling';
 import Understanding from '../Understanding';
 import Support from '../Support';
 import Comments from '../Comments';
+import Submit from '../Submit';
 
 import './App.css';
 
 function App() {
 
-  const steps = ['How do you Feel?', 
+  const dispatch = useDispatch();
+  const stepperData = ['How do you Feel?', 
                 'How well are you understanding the content?', 
                 'How well are you being supported?', 
                 'Comments',
                 'Submit'];
 
-  const [activeStep, setActiveStep] = useState(0);
 
-  const setStep = () => {
 
+  const steps = useSelector(store => store.steps);
+  const activeStep = useSelector(store => store.activeStep);
+
+  const setSteps = () => {
+    dispatch({type: 'SET_STEPS', payload: stepperData})
+    dispatch({type: 'SET_ACTIVE_STEP', payload: 0})
   }
 
+
+
+  useEffect(() => {
+    setSteps();
+  }, []);
 
   return (
     <div className="container">
@@ -52,8 +64,9 @@ function App() {
       <Router>
         <Route exact path="/" component={Feeling} />
         <Route exact path="/understanding" component={Understanding} />
-        <Route exact path="/Support" component={Support} />
-        <Route exact path="/Comments" component={Comments} />
+        <Route exact path="/support" component={Support} />
+        <Route exact path="/comments" component={Comments} />
+        <Route exact path="/submit" component={Submit} />
 
 
       </Router>

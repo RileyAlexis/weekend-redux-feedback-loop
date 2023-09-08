@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 //Material UI
 import Rating from '@mui/material/Rating';
@@ -12,25 +12,28 @@ import { Button } from "@mui/material";
 import Snackbar from '@mui/material/Snackbar';
 
 
-function Feeling () {
-    const mods = false;
+function Feeling ({submit}) {
     const history = useHistory();
     const dispatch = useDispatch();
-    const [value, setValue] = useState(0);
+    const feeling = useSelector(store => store.feeling);
+    const activeStep = useSelector(store => store.activeStep);
+    const [value, setValue] = useState(feeling);
     const [open, setOpen] = useState(false);
-
-
-
-
+    
     const handleClick = () => {
        if (value > 0) {
             dispatch({type: 'SET_FEELING', payload: value});
-            console.log(value);
+            dispatch({type: 'SET_ACTIVE_STEP', payload: 1});
+            history.push('/understanding')
        }
        else if (value === 0) {
         setOpen(true);
        }
-        
+    }
+
+    const setFeeling = () => {
+        dispatch({type: 'SET_FEELING', payload: value});
+        submit = false;
     }
 
     const handleClose = () => {
@@ -53,9 +56,13 @@ function Feeling () {
                 autoHideDuration={3000}
                 onClose={handleClose}
                 message='Please select a rating before proceeding'
-                anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+                
+                
+                >
             </Snackbar>
         <Typography>How are you feeling today?</Typography>
+        <br />
         <StyledRating
             required
             value={value}
@@ -71,9 +78,18 @@ function Feeling () {
             <br />
             <br />
             <br />
-            <Button variant="outlined" onClick={() => handleClick()}>Next</Button>
-        </>
-    )
+            {
+                activeStep === 4 ? (<Button variant="outlined"  onClick={() => setFeeling()}>Set</Button>) :
+                ( <Button variant="outlined" onClick={() => handleClick()}>Next</Button>)
+
+            }
+           
+            </>
+
+               
+            )
+
+    
 }
 
 export default Feeling;
