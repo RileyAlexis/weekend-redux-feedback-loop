@@ -1,5 +1,6 @@
 import { useState , useEffect} from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import swal from 'sweetalert';
 
@@ -12,6 +13,8 @@ function Admin () {
 
   const [dataSet, setDataSet] = useState([]);
   const [selectionModel, setSelectionModel] = useState([]);
+ const history = useHistory();
+ const dispatch = useDispatch();
 
   const fetchData = () => {
     axios.get('/reflect')
@@ -57,6 +60,11 @@ function Admin () {
   }
       )
     console.log(selectionModel);
+  }
+
+  const home = () => {
+    dispatch({type: 'STEPPER_ON'});
+    history.push('/');
   }
 
   useEffect(() => {
@@ -106,6 +114,7 @@ function Admin () {
           
           />
           <Button variant="outlined" disabled={selectionModel.length === 0} onClick={() => handleDelete()}><GridDeleteIcon /></Button>
+          <Button variant="outlined" onClick={home}>Home</Button>
       </div>
     );
 }
