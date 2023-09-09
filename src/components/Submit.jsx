@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import axios from 'axios';
 
 //Components
 import Feeling from './Feeling';
@@ -10,9 +11,7 @@ import Comments from './Comments';
 //Material UI
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import { Button } from '@mui/material';
 import Divider from '@mui/material/Divider';
 
 
@@ -24,6 +23,23 @@ function Submit () {
     const understanding = useSelector(store => store.understanding);
     const support = useSelector(store => store.support);
     const comments = useSelector(store => store.comments);
+
+    const handleSubmit = () => {
+        const dataObj = {
+            feelings: feeling,
+            understanding: understanding,
+            support: support,
+            comments: comments
+        }
+        console.log(dataObj);
+        axios.post('/reflect/', dataObj)
+        .then((response) => {
+            history.push('/complete');
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
 
     return (
         <List>
@@ -37,7 +53,10 @@ function Submit () {
             <ListItem>
                 <Support />
             </ListItem>
+            <ListItem>
                 <Comments />
+            </ListItem>
+            <Button variant="outlined" onClick={handleSubmit}>Submit Reflection</Button>
 
         </List>
     

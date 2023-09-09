@@ -1,6 +1,7 @@
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 //Material UI
 import TextField from '@mui/material/TextField';
@@ -11,8 +12,9 @@ function Comments () {
 
 const dispatch = useDispatch();
 const history = useHistory();
-const comment = useSelector(store => store.comments);
-const [comments, setComments] = useState(comment);
+const storeComments = useSelector(store => store.comments);
+const activeStep =useSelector(store => store.activeStep);
+const [comments, setComments] = useState(storeComments);
 
 const handleSubmit = () => {
     dispatch({type: 'SET_COMMENTS', payload: comments});
@@ -40,8 +42,22 @@ const skip = () => {
         onChange={(event) => setComments(event.target.value)}
         value={comments}
         />
-        <Button variant="outlined" onClick={handleSubmit}>Submit Comments</Button>
-        <Button variant="outlined" onClick={skip}>Skip</Button>
+     {
+                activeStep === 4 ? 
+                     (
+                        <></>
+                     )
+                     :
+                     (
+                        <>
+                        <Button variant="outlined" onClick={handleSubmit}>Submit Comments</Button>
+                        <Button variant="outlined" onClick={skip}>Skip</Button>
+                        </>
+                     )
+
+            }
+
+
         </>
     )
 }

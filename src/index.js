@@ -7,11 +7,6 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 
-const response = (state = [], action) => {
-
-    return state;
-}
-
 const feeling = (state = 0, action) => {
     if (action.type === 'SET_FEELING') {
         return action.payload;
@@ -59,7 +54,6 @@ const activeStep = (state = 0, action) => {
 const storeInstance = createStore(
     // reducers,{
     combineReducers({
-      response,
       feeling,
       understanding,
       support, 
