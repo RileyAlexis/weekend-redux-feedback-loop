@@ -18,6 +18,7 @@ import Understanding from '../Understanding';
 import Support from '../Support';
 import Comments from '../Comments';
 import Submit from '../Submit';
+import Complete from '../Complete';
 
 import './App.css';
 
@@ -67,7 +68,7 @@ function App() {
         <Route exact path="/support" component={Support} />
         <Route exact path="/comments" component={Comments} />
         <Route exact path="/submit" component={Submit} />
-
+        <Route exact path="/complete" component={Complete} />
 
       </Router>
       </div>

@@ -11,8 +11,9 @@ import Comments from './Comments';
 //Material UI
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import Divider from '@mui/material/Divider';
+
 
 
 function Submit () {
@@ -42,6 +43,8 @@ function Submit () {
     }
 
     return (
+        <>
+        <Typography>Review your selections and press 'Submit Reflection' when ready</Typography>
         <List>
             <ListItem>
                 <Feeling submit={true}/>
@@ -50,16 +53,18 @@ function Submit () {
             <ListItem>
                 <Understanding />
             </ListItem>
+            <Divider />
             <ListItem>
                 <Support />
             </ListItem>
+            <Divider />
             <ListItem>
                 <Comments />
             </ListItem>
             <Button variant="outlined" onClick={handleSubmit}>Submit Reflection</Button>
 
         </List>
-    
+        </>
 
     )
 }
