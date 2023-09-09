@@ -21,4 +21,44 @@ router.post('/', (req, res) => {
     })
 })
 
+router.put('/flag/:id', (req, res) => {
+    let queryString = `
+        UPDATE "feedback"
+        SET "flagged" = NOT "flagged"
+        WHERE "id" = $1
+    `
+    let id = req.params.id;
+    pool.query(queryString, [id])
+    .then((result) => {
+        res.sendStatus(200);
+    })
+    .catch((error) => {
+        console.log(`Error making query ${queryString}`, error);
+        res.sendStatus(500);
+})
+})
+
+
+
+
+
+
+router.get('/', (req, res) => {
+    let queryString = `
+                SELECT 
+                "id", "feeling", "understanding", "support", "comments",
+                TO_CHAR("date", 'YYYY-MM-fmDD') AS "date", "flagged"
+                FROM "feedback"
+                ORDER BY "date" ASC;`;
+    pool.query(queryString)
+    .then((result) => {
+        res.send(result.rows);
+    })
+    .catch((error) => {
+        console.log(`Error making query ${queryString}`, error);
+        res.sendStatus(500);
+    }
+    )
+})
+
 module.exports = router;
