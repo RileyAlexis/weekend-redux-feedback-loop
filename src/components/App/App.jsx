@@ -79,7 +79,7 @@ function App() {
         </Route>
         <div className="content">
           <Route exact path="/" component={Feeling} />
-          <Route exact path="/understanding" component={Understanding} />
+          <Route path="/understanding" component={Understanding} />
           <Route path="/support" component={Support} />
           <Route path="/comments" component={Comments} />
           <Route path="/submit" component={Submit} />

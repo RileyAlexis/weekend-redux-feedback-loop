@@ -63,7 +63,7 @@ function Admin () {
   }
 
   const home = () => {
-    dispatch({type: 'STEPPER_ON'});
+    dispatch({type: 'SET_ACTIVE_STEP', payload: 0})
     history.push('/');
   }
 

@@ -24,7 +24,7 @@ function Feeling ({submit}) {
        if (value > 0) {
             dispatch({type: 'SET_FEELING', payload: value});
             dispatch({type: 'SET_ACTIVE_STEP', payload: 1});
-            history.push('/stepper.understanding')
+            history.push('/understanding')
        }
        else if (value === 0) {
         setOpen(true);
