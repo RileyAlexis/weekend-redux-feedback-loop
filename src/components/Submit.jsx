@@ -35,6 +35,7 @@ function Submit () {
         console.log(dataObj);
         axios.post('/reflect/', dataObj)
         .then((response) => {
+            dispatch({type: 'SET_ACTIVE_STEP', payload: 5});
             history.push('/complete');
         })
         .catch((error) => {

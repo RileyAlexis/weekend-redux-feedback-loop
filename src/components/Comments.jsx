@@ -24,6 +24,7 @@ const handleSubmit = () => {
 }
 
 const skip = () => {
+    dispatch({type: 'SET_ACTIVE_STEP', payload: 4});
     history.push('/submit')
 }
 

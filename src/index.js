@@ -55,6 +55,10 @@ const activeStep = (state = 0, action) => {
         return action.payload;
     } else if (action.type === 'SET_ACTIVE_STEP' && state === 4) {
         return state = 4;
+    } else if (action.type === 'STEPPER_OFF') {
+        return state = -1;
+    } else if (action.type === 'STEPPER_ON') {
+        return state = 0;
     }
     return state;
 }
