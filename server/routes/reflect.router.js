@@ -28,17 +28,33 @@ router.put('/flag/:id', (req, res) => {
         WHERE "id" = $1
     `
     let id = req.params.id;
+    console.log(id);
     pool.query(queryString, [id])
-    .then((result) => {
-        res.sendStatus(200);
-    })
-    .catch((error) => {
-        console.log(`Error making query ${queryString}`, error);
-        res.sendStatus(500);
-})
-})
+        .then((result) => {
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log(`Error making query ${queryString}`, error);
+            res.sendStatus(500);
+        })
+});
 
-
+//Deletes all rows selected from datagrid - ids is an array of ids
+router.delete('/rows/', (req, res) => {
+    let rows = req.body;
+    let idString = rows.join(',');
+    let queryString = `
+        DELETE FROM "feedback" WHERE id IN (${idString})
+        `;
+    pool.query(queryString)
+        .then((result) => {
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log(`Error making query ${queryString}`, error);
+            res.sendStatus(500);
+        })
+});
 
 
 

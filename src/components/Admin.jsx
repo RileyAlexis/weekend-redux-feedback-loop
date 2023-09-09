@@ -1,22 +1,22 @@
 import { useState , useEffect} from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
+import swal from 'sweetalert';
 
 //Material UI
 import { DataGrid, GridRowsProp, GridColDef, GridCellParams} from '@mui/x-data-grid';
 import { Button, MenuItem, Select } from "@mui/material";
-import { DeleteIcon } from '@mui/icons-material'
+import { GridDeleteIcon } from "@mui/x-data-grid";
 
 function Admin () {
 
   const [dataSet, setDataSet] = useState([]);
-  const [rowID, setRowID] = useState(0);
+  const [selectionModel, setSelectionModel] = useState([]);
 
   const fetchData = () => {
     axios.get('/reflect')
     .then((response) => {
       setDataSet(response.data);
-      console.log(response.data);
     })
     .catch((error) => {
       console.log(error);
@@ -33,10 +33,36 @@ function Admin () {
     })
   }
 
+  const handleSelctionChange = (newSelection) => {
+    setSelectionModel(newSelection)
+  }
+
+  const handleDelete = () => {
+    swal({
+      title: `Delete ${selectionModel.length} Rows?`,
+      text: 'Are you sure?',
+      icon: "warning",
+      buttons: true,
+      dangerMode: true
+      })
+      .then((value) => {
+          if (value) {
+          axios.delete(`/reflect/rows/`, {data: selectionModel})
+          .then((response) => {
+              fetchData();
+          }).catch((error) => {
+              console.log(error);
+          })
+      }
+  }
+      )
+    console.log(selectionModel);
+  }
 
   useEffect(() => {
     fetchData();
   }, []);
+
 
 
     const rows: GridRowsProp = dataSet;
@@ -67,18 +93,19 @@ function Admin () {
       ];
 
     return (
-        <div style={{ height: 300, width: '100%' }}>
+        <div style={{ height: 550, width: '100%' }}>
+
+
         <DataGrid 
           rows={rows} 
           columns={columns} 
           checkboxSelection={true} 
-          getRowId={rowID}
-          pageSize={15}
-          autoHeight={true}
-          
-
+          pageSize={25}
+          onRowSelectionModelChange={handleSelctionChange}
+          selectionModel={selectionModel}
           
           />
+          <Button variant="outlined" disabled={selectionModel.length === 0} onClick={() => handleDelete()}><GridDeleteIcon /></Button>
       </div>
     );
 }
