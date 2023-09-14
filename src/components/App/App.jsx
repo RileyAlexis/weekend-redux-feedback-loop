@@ -66,6 +66,7 @@ function App() {
             <Submit />
           </Route>
         <Route path="/complete" component={Complete} />
+        <Route path="/editResponses" component={Admin} />
         </>
         )}
         </div>
