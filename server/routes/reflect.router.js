@@ -6,8 +6,7 @@ router.post('/', (req, res) => {
     let queryString = `INSERT INTO "feedback" ("feeling", "understanding", "support", "comments")
                     VALUES ($1, $2, $3, $4);`;
     pool.query(queryString, 
-        [
-            req.body.feelings, 
+        [   req.body.feelings, 
             req.body.understanding, 
             req.body.support, 
             req.body.comments
@@ -55,9 +54,6 @@ router.delete('/rows/', (req, res) => {
             res.sendStatus(500);
         })
 });
-
-
-
 
 router.get('/', (req, res) => {
     let queryString = `

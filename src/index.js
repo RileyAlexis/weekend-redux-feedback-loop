@@ -73,7 +73,7 @@ const storeInstance = createStore(
       comments,
       activeStep
     }),
-    applyMiddleware(logger)
+    // applyMiddleware(logger)
   )
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

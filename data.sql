@@ -4,6 +4,7 @@
 -- Table to store the feedback
 CREATE TABLE "feedback" (
   "id" serial primary key,
+  "user_email" VARCHAR(65),
   "feeling" DECIMAL not null,
   "understanding" DECIMAL not null,
   "support" DECIMAL not null,
@@ -15,3 +16,9 @@ CREATE TABLE "feedback" (
 -- Sample feedback item
 INSERT INTO "feedback" ("feeling", "understanding", "support", "comments")
 VALUES (4, 4, 5, 'Doing Great!');
+
+
+CREATE TABLE "users" (
+  "email" text NOT NULL UNIQUE,
+  "hashed_password" VARCHAR(255)
+);

@@ -1,4 +1,5 @@
 const pg = require('pg');
+require('dotenv').config();
 let pool;
 
 // When our app is deployed to the internet 
@@ -19,8 +20,10 @@ if (process.env.DATABASE_URL) {
 // also running on our computer (localhost)
 else {
     pool = new pg.Pool({
-        host: 'localhost',
-        port: 5432,
+        user: process.env.USERNAME,
+        password: process.env.PASSWORD,
+        host: process.env.HOST,
+        port: process.env.DBPORT,
         database: 'prime_feedback', 
     });
 }
