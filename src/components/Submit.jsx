@@ -24,13 +24,15 @@ function Submit () {
     const understanding = useSelector(store => store.understanding);
     const support = useSelector(store => store.support);
     const comments = useSelector(store => store.comments);
+    const userEmail = useSelector(store => store.userEmail);
 
     const handleSubmit = () => {
         const dataObj = {
             feelings: feeling,
             understanding: understanding,
             support: support,
-            comments: comments
+            comments: comments,
+            userEmail: userEmail
         }
         console.log(dataObj);
         axios.post('/reflect/', dataObj)

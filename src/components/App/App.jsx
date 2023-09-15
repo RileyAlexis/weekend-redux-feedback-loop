@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { HashRouter as Router, Route, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
@@ -30,9 +30,19 @@ import { Feed } from '@mui/icons-material';
 function App() {
 
   const [cookies, setCookies, removeCookies] = useCookies(null);
-  const authToken = cookies.AuthToken;
-  const userEmail = cookies.Email;
+  const authToken = cookies.authToken;
   const activeStep = useSelector(store => store.activeStep);
+  const dispatch = useDispatch();
+
+  const setEmail = () => {
+    if (authToken && cookies.email !== undefined) {
+      dispatch({type: 'SET_USER_EMAIL', payload: cookies.email});
+    }
+  }
+
+  useEffect(() => {
+    setEmail();
+  }, []);
 
   return (
     <Router>

@@ -3,13 +3,14 @@ const router = express.Router();
 const pool = require('../modules/pool');
 
 router.post('/', (req, res) => {
-    let queryString = `INSERT INTO "feedback" ("feeling", "understanding", "support", "comments")
-                    VALUES ($1, $2, $3, $4);`;
+    let queryString = `INSERT INTO "feedback" ("feeling", "understanding", "support", "comments", "user_email")
+                    VALUES ($1, $2, $3, $4, $5);`;
     pool.query(queryString, 
         [   req.body.feelings, 
             req.body.understanding, 
             req.body.support, 
-            req.body.comments
+            req.body.comments,
+            req.body.userEmail
         ])
     .then((result) => {
         res.sendStatus(200);

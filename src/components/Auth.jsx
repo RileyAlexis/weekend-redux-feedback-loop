@@ -21,15 +21,15 @@ function Auth () {
             setError('Make sure passwords match');
             return
         }
-        console.log(isLogin);
         if (!isLogin) {
-        axios.post('/user/signup', {email: email, password: password})
+        axios.post('/user/signup/', {email: email, password: password})
             .then((response) => {
-                if (response.detail) {
-                    setError(response.detail);
+                console.log('Signup response from Server', response.data);
+                if (response.data.detail) {
+                    setError(response.data.detail);
                 } else {
-                    setCookie('Email', response.email);
-                    setCookie('AuthToken', response.token);
+                    setCookie('Email', response.data.email);
+                    setCookie('AuthToken', response.data.token);
                     window.location.reload();
                 }
             })
@@ -37,13 +37,14 @@ function Auth () {
                 console.error(error);
             })
         } else if (isLogin) {
-            axios.post('/user/login', {email, password})
+            axios.post('/user/login/', {email, password})
                 .then((response) => {
-                    if (response.detail) {
-                        setError(response.detail);
-                    } else {
-                        setCookie('Email, response.email');
-                        setCookie('AuthToken', response.token);
+                    console.log('Detail', response.data.detail);
+                    if (response.data.detail) {
+                        setError(response.data.detail);
+                    } else if (!response.data.detail) {
+                        setCookie('Email', response.data.email);
+                        setCookie('AuthToken', response.data.token);
                         window.location.reload();
                     }
                 })

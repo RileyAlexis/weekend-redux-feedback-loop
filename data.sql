@@ -4,13 +4,13 @@
 -- Table to store the feedback
 CREATE TABLE "feedback" (
   "id" serial primary key,
-  "user_email" VARCHAR(65),
   "feeling" DECIMAL not null,
   "understanding" DECIMAL not null,
   "support" DECIMAL not null,
   "comments" text,
   "flagged" boolean default false,
-  "date" date not null default CURRENT_DATE
+  "date" date not null default CURRENT_DATE,
+  "user_email" VARCHAR(65)
 ); 
 
 -- Sample feedback item

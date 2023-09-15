@@ -76,7 +76,8 @@ function Admin () {
     const rows: GridRowsProp = dataSet;
       
       const columns: GridColDef[] = [
-        { field: 'id', headerName: 'id', wduth: 40},
+        { field: 'id', headerName: 'id', width: 40},
+        { field: 'user_email', headerName: 'User', width: 70},
         { field: 'feeling', headerName: 'Feeling', width: 100, editable: false },
         { field: 'understanding', headerName: 'Understanding', width: 100, editable: false },
         { field: 'support', headerName: 'Supported', width:100, editable: false },

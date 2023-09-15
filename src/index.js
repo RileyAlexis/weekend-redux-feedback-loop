@@ -63,6 +63,13 @@ const activeStep = (state = 0, action) => {
     return state;
 }
 
+const userEmail = (state = '', action) => {
+    if (action.type === 'SET_USER_EMAIL') {
+        return action.payload;
+    }
+    return state;
+}
+
 const storeInstance = createStore(
     // reducers,{
     combineReducers({
@@ -71,7 +78,8 @@ const storeInstance = createStore(
       support, 
       steps,
       comments,
-      activeStep
+      activeStep,
+      userEmail
     }),
     // applyMiddleware(logger)
   )
