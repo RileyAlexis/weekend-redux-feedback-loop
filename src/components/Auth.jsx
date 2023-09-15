@@ -1,5 +1,6 @@
 import{ useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 function Auth () {
@@ -8,7 +9,8 @@ function Auth () {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [confirmPassword, setConfirmPassword] = useState(null);
-    const [cookies, setCookie, removeCookie] = useCookies(null);
+    const [cookies, setCookie, removeCookie] = useCookies(['Email' , 'AuthToken']);
+    const dispatch = useDispatch();
 
     const viewLogin = (status) => {
         setError(null);
@@ -30,6 +32,7 @@ function Auth () {
                 } else {
                     setCookie('Email', response.data.email);
                     setCookie('AuthToken', response.data.token);
+                    dispatch({type: 'AUTHORIZE', payload: 'USER'})
                     window.location.reload();
                 }
             })
@@ -45,6 +48,7 @@ function Auth () {
                     } else if (!response.data.detail) {
                         setCookie('Email', response.data.email);
                         setCookie('AuthToken', response.data.token);
+                        dispatch({type: 'AUTHORIZE', payload: response.data.role})
                         window.location.reload();
                     }
                 })

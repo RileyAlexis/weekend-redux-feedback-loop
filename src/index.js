@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './components/App/App';
-
+import { CookiesProvider } from 'react-cookie';
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
@@ -70,6 +70,13 @@ const userEmail = (state = '', action) => {
     return state;
 }
 
+const authorizedUser = (state = null, action) => {
+   if (action.type === 'AUTHORIZE') {
+    return action.payload;
+   } 
+   return state;
+}
+
 const storeInstance = createStore(
     // reducers,{
     combineReducers({
@@ -79,7 +86,8 @@ const storeInstance = createStore(
       steps,
       comments,
       activeStep,
-      userEmail
+      userEmail,
+      authorizedUser
     }),
     // applyMiddleware(logger)
   )
@@ -88,7 +96,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <Provider store={storeInstance}>
+            <CookiesProvider>
         <App />
+        </CookiesProvider>
         </Provider>
     </React.StrictMode>
 );

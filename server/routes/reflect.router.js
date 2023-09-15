@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool');
+const authMiddleware = require('../modules/verifyToken');
 
-router.post('/', (req, res) => {
+router.post('/', authMiddleware, (req, res) => {
+    console.log(req.user);
     let queryString = `INSERT INTO "feedback" ("feeling", "understanding", "support", "comments", "user_email")
                     VALUES ($1, $2, $3, $4, $5);`;
     pool.query(queryString, 

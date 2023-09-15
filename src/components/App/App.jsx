@@ -3,6 +3,7 @@ import { HashRouter as Router, Route, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
+import axios from 'axios';
 
 
 //Material UI
@@ -29,19 +30,37 @@ import { Feed } from '@mui/icons-material';
 
 function App() {
 
-  const [cookies, setCookies, removeCookies] = useCookies(null);
-  const authToken = cookies.authToken;
+  const [cookies, setCookies, removeCookies] = useCookies(['Email' , 'AuthToken']);
+  const authToken = cookies.AuthToken;
+  const email = cookies.email;
   const activeStep = useSelector(store => store.activeStep);
+  const authorizedUser = useSelector(store => store.authorizedUser);
   const dispatch = useDispatch();
 
+  const verifyTokens = () => {
+
+    if (!email && !authToken) {
+      console.log('Not authorized');
+
+    }
+    if (email && authToken) {
+      console.log('Has token');
+      dispatch({type: 'AUTHORIZE', payload: 'USER'})
+      dispatch({type: 'SET_USER_EMAIL', payload: email});
+    }
+  }
+  
+
+
   const setEmail = () => {
-    if (authToken && cookies.email !== undefined) {
+    if (cookies.AuthToken && cookies.email !== undefined) {
       dispatch({type: 'SET_USER_EMAIL', payload: cookies.email});
     }
   }
 
   useEffect(() => {
-    setEmail();
+    console.log(cookies);
+    verifyTokens();
   }, []);
 
   return (
@@ -51,9 +70,10 @@ function App() {
         <div className="header">
           <Header />
         </div>
+        {console.log('Authorized', authorizedUser)}
         {/* TODO : will require user authenication before displaying this component */}
-        {!authToken && <Auth />}
-          {(authToken && activeStep >= 0 && activeStep < 5) ? (
+        {authorizedUser === null && <Auth />}
+          {(authorizedUser !== null && activeStep >= 0 && activeStep < 5) ? (
               <FeedbackStepper />
               )
               :
