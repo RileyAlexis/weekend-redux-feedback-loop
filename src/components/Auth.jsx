@@ -33,6 +33,7 @@ function Auth () {
                     setCookie('Email', response.data.email);
                     setCookie('AuthToken', response.data.token);
                     dispatch({type: 'AUTHORIZE', payload: 'USER'})
+                    dispatch({type: 'SET_USER_EMAIL', payload: email});
                     window.location.reload();
                 }
             })
@@ -49,6 +50,7 @@ function Auth () {
                         setCookie('Email', response.data.email);
                         setCookie('AuthToken', response.data.token);
                         dispatch({type: 'AUTHORIZE', payload: response.data.role})
+                        dispatch({type: 'SET_USER_EMAIL', payload: response.data.email})
                         window.location.reload();
                     }
                 })

@@ -35,6 +35,7 @@ function Submit () {
             userEmail: userEmail
         }
         console.log(dataObj);
+        console.log(userEmail);
         axios.post('/reflect/', dataObj)
         .then((response) => {
             dispatch({type: 'SET_ACTIVE_STEP', payload: 5});

@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Button, Menu, MenuItem } from "@mui/material";
 import { useState, useEffect } from "react";
 import { UseSelector, useSelector, useDispatch } from "react-redux";
-
+import { useCookies } from "react-cookie";
 
 function Header () {
 
@@ -18,6 +18,13 @@ function Header () {
         dispatch({type: 'STEPPER_OFF'})
         history.push('/editResponses');
         };
+    const [cookies, setCookie, removeCookie] = useCookies(['Email' , 'AuthToken']);
+    const handleSignout = () => {
+        removeCookie('Email');
+        removeCookie('AuthToken');
+        window.location.reload();
+    }
+
     const activeStep = useSelector(store => store.activeStep);
 
 
@@ -27,21 +34,8 @@ function Header () {
         {
         activeStep === 0 ? (
             <>
-            <Button
-                id="menuButton"
-                aria-controls={open ? 'adminMenu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}>Admin
-            </Button>
-            <Menu 
-                id="adminMenu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                >
-            <MenuItem onClick={handleClose}>Edit Responses</MenuItem>
-            </Menu>
+            <Button variant="outlined" onClick={handleClose}>Edit Responses</Button>
+            <Button variant="outlined" onClick={handleSignout}>Sign out</Button>
             </>
         )
         :

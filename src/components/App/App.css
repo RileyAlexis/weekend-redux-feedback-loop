@@ -18,6 +18,7 @@
   text-shadow: 1px -1px 1px rgba(104, 104, 104, 0.7);
   display: flex;
   justify-content: space-around;
+  align-content: baseline;
 }
 
 .stepper {

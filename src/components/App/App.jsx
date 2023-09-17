@@ -32,7 +32,7 @@ function App() {
 
   const [cookies, setCookies, removeCookies] = useCookies(['Email' , 'AuthToken']);
   const authToken = cookies.AuthToken;
-  const email = cookies.email;
+  const email = cookies.Email;
   const activeStep = useSelector(store => store.activeStep);
   const authorizedUser = useSelector(store => store.authorizedUser);
   const dispatch = useDispatch();
@@ -47,14 +47,6 @@ function App() {
       console.log('Has token');
       dispatch({type: 'AUTHORIZE', payload: 'USER'})
       dispatch({type: 'SET_USER_EMAIL', payload: email});
-    }
-  }
-  
-
-
-  const setEmail = () => {
-    if (cookies.AuthToken && cookies.email !== undefined) {
-      dispatch({type: 'SET_USER_EMAIL', payload: cookies.email});
     }
   }
 

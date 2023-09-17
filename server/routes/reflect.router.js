@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require('../modules/pool');
 const authMiddleware = require('../modules/verifyToken');
 
-router.post('/', authMiddleware, (req, res) => {
+router.post('/', (req, res) => {
     console.log(req.user);
     let queryString = `INSERT INTO "feedback" ("feeling", "understanding", "support", "comments", "user_email")
                     VALUES ($1, $2, $3, $4, $5);`;

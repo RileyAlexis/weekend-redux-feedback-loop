@@ -89,7 +89,7 @@ const storeInstance = createStore(
       userEmail,
       authorizedUser
     }),
-    // applyMiddleware(logger)
+    applyMiddleware(logger)
   )
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
